@@ -52,16 +52,24 @@ public class Teste {
     }
 
     private void cadastrarVeiculoPasseio(Scanner sc) {
+        boolean jaExisteVeiculo = false;
         if (veicPasseioList.size() == 5) {
             System.out.println("Você já possui cinco veículos cadastrados!");
         } else {
-            for (Veiculo veiculo : veicPasseioList) {
-                Passeio veiculoNovo = passeioService.cadastrarVeiculoPasseio(sc);
-                if (veiculoNovo.getPlaca().equalsIgnoreCase(veiculo.getPlaca())) {
+            Passeio veiculoNovo = passeioService.cadastrarVeiculoPasseio(sc);
+            if (veicPasseioList.size() >= 1){
+                for (Veiculo veiculo : veicPasseioList) {
+                    if (veiculoNovo.getPlaca().equalsIgnoreCase(veiculo.getPlaca())){
+                        jaExisteVeiculo = true;
+                    }
+                }
+                if (jaExisteVeiculo) {
                     System.out.println("Você já possui esse veículo cadastrado!");
                 } else {
                     veicPasseioList.add(veiculoNovo);
                 }
+            } else {
+                veicPasseioList.add(veiculoNovo);
             }
         }
     }
@@ -74,16 +82,24 @@ public class Teste {
     }
 
     private void cadastrarVeiculoCarga(Scanner sc) {
+        boolean jaExisteVeiculo = false;
         if (veicCargaList.size() == 5) {
             System.out.println("Você já possui cinco veículos cadastrados!");
         } else {
-            for (Veiculo veiculo : veicCargaList) {
-                Carga veiculoNovo = passeioService.cadastrarVeiculoCarga(sc);
-                if (veiculoNovo.getPlaca().equalsIgnoreCase(veiculo.getPlaca())){
+            Carga veiculoNovo = passeioService.cadastrarVeiculoCarga(sc);
+            if (veicCargaList.size() >= 1){
+                for (Veiculo veiculo : veicCargaList) {
+                    if (veiculoNovo.getPlaca().equalsIgnoreCase(veiculo.getPlaca())){
+                        jaExisteVeiculo = true;
+                    }
+                }
+                if (jaExisteVeiculo){
                     System.out.println("Você já possui esse veículo cadastrado!");
                 } else {
                     veicCargaList.add(veiculoNovo);
                 }
+            } else {
+                veicCargaList.add(veiculoNovo);
             }
         }
     }
