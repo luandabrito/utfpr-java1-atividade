@@ -1,17 +1,17 @@
 package br.com.especializacao.atividade;
 
-import br.com.especializacao.atividade.service.PasseioService;
+import br.com.especializacao.atividade.service.VeiculoService;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Teste {
 
-    PasseioService passeioService = new PasseioService();
+    VeiculoService passeioService = new VeiculoService();
     Scanner sc = new Scanner (System.in);
     ArrayList<Passeio> veicPasseioList = new ArrayList<>();
+    ArrayList<Carga> veicCargaList = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
         Teste obj = new Teste();
@@ -33,13 +33,18 @@ public class Teste {
             int opcao = sc.nextInt();
             sc.nextLine(); //Limpa o buffer
             if (opcao == 7) {
+                System.out.println("Encerrando o Sistema");
                 break;
             } else if (opcao == 1) {
                 cadastrarVeiculoPasseio(sc);
+            } else if (opcao == 2) {
+                cadastrarVeiculoCarga(sc);
             } else if (opcao == 3) {
                 listarVeiculosPasseio();
+            } else if (opcao == 4) {
+                listarVeiculosCarga();
             } else {
-                    System.out.println("Opção inválida.\n");
+                System.out.println("Opção inválida.\n");
             }
         }
         sc.close();
@@ -55,6 +60,21 @@ public class Teste {
 
     private void listarVeiculosPasseio() {
         for (Veiculo veiculo : veicPasseioList) {
+            System.out.println(veiculo.toString());
+        }
+
+    }
+
+    private void cadastrarVeiculoCarga(Scanner sc) {
+        if (veicCargaList.size() == 5) {
+            System.out.println("Você já tem cinco veículos cadastrados!");
+        } else {
+            veicCargaList.add(passeioService.cadastrarVeiculoCarga(sc));
+        }
+    }
+
+    private void listarVeiculosCarga() {
+        for (Veiculo veiculo : veicCargaList) {
             System.out.println(veiculo.toString());
         }
 
