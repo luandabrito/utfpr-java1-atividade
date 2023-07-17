@@ -4,6 +4,7 @@ import br.com.especializacao.atividade.service.VeiculoService;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Teste {
@@ -52,9 +53,16 @@ public class Teste {
 
     private void cadastrarVeiculoPasseio(Scanner sc) {
         if (veicPasseioList.size() == 5) {
-            System.out.println("Você já tem cinco veículos cadastrados!");
+            System.out.println("Você já possui cinco veículos cadastrados!");
         } else {
-            veicPasseioList.add(passeioService.cadastrarVeiculoPasseio(sc));
+            for (Veiculo veiculo : veicPasseioList) {
+                Passeio veiculoNovo = passeioService.cadastrarVeiculoPasseio(sc);
+                if (veiculoNovo.getPlaca().equalsIgnoreCase(veiculo.getPlaca())) {
+                    System.out.println("Você já possui esse veículo cadastrado!");
+                } else {
+                    veicPasseioList.add(veiculoNovo);
+                }
+            }
         }
     }
 
@@ -67,9 +75,16 @@ public class Teste {
 
     private void cadastrarVeiculoCarga(Scanner sc) {
         if (veicCargaList.size() == 5) {
-            System.out.println("Você já tem cinco veículos cadastrados!");
+            System.out.println("Você já possui cinco veículos cadastrados!");
         } else {
-            veicCargaList.add(passeioService.cadastrarVeiculoCarga(sc));
+            for (Veiculo veiculo : veicCargaList) {
+                Carga veiculoNovo = passeioService.cadastrarVeiculoCarga(sc);
+                if (veiculoNovo.getPlaca().equalsIgnoreCase(veiculo.getPlaca())){
+                    System.out.println("Você já possui esse veículo cadastrado!");
+                } else {
+                    veicCargaList.add(veiculoNovo);
+                }
+            }
         }
     }
 
@@ -79,6 +94,5 @@ public class Teste {
         }
 
     }
-
 
 }
