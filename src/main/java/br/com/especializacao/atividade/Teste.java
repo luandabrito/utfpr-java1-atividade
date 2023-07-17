@@ -23,7 +23,7 @@ public class Teste {
     public void menu(){
 
         while(true) {
-            System.out.println("Sistema de Gestão de Veículos - Menu Inicial");
+            System.out.println("\nSistema de Gestão de Veículos - Menu Inicial");
             System.out.println("1 - Cadastrar Veículo de Passeio");
             System.out.println("2 - Cadastrar Veículos de Carga");
             System.out.println("3 - Imprimir Todos os Veículos de Passeio");
@@ -52,16 +52,21 @@ public class Teste {
     }
 
     private void cadastrarVeiculoPasseio(Scanner sc) {
-        boolean jaExisteVeiculo = false;
-        if (veicPasseioList.size() == 5) {
-            System.out.println("Você já possui cinco veículos cadastrados!");
-        } else {
+        do {
             Passeio veiculoNovo = passeioService.cadastrarVeiculoPasseio(sc);
             if (veicPasseioList.size() == 0  || !placaExiste(veiculoNovo, "passeio")) {
                 veicPasseioList.add(veiculoNovo);
                 System.out.println("Veículo cadastrado com sucesso. ");
             }
-        }
+            System.out.println("Deseja cadastrar outro veículo de passeio? Sim ou Não ");
+            String opcao = sc.nextLine();
+            if (opcao.equalsIgnoreCase("não")){
+                break;
+            }
+            if (veicPasseioList.size() == 5) {
+                System.out.println("Você atingiu o limite máximo de cinco veículos cadastrados!");
+            }
+        } while (veicPasseioList.size() < 5);
     }
 
     private void listarVeiculosPasseio() {
@@ -71,16 +76,22 @@ public class Teste {
     }
 
     private void cadastrarVeiculoCarga(Scanner sc) {
-        boolean jaExisteVeiculo = false;
-        if (veicCargaList.size() == 5) {
-            System.out.println("Você já possui cinco veículos cadastrados!");
-        } else {
+        do {
             Carga veiculoNovo = passeioService.cadastrarVeiculoCarga(sc);
             if (veicCargaList.size() == 0  || !placaExiste(veiculoNovo, "carga")) {
                 veicCargaList.add(veiculoNovo);
                 System.out.println("Veículo cadastrado com sucesso. ");
             }
-        }
+            System.out.println("Deseja cadastrar outro veículo de passeio? Sim ou Não ");
+            String opcao = sc.nextLine();
+            if (opcao.equalsIgnoreCase("não")){
+                break;
+            }
+            if (veicCargaList.size() == 5) {
+                System.out.println("Você atingiu o limite máximo de cinco veículos cadastrados!");
+            }
+        } while (veicCargaList.size() < 5);
+
     }
 
     private void listarVeiculosCarga() {

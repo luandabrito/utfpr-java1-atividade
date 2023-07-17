@@ -48,5 +48,6 @@ public class VeiculoService {
         veiculo.getMotor().setPotencia(sc.nextInt());
         System.out.println("Informe a quantidade de Pist do veículos: ");
         veiculo.getMotor().setQtdPist(sc.nextInt());
+        sc.nextLine();
     }
 }
