@@ -1,6 +1,6 @@
 package br.com.especializacao.atividade;
 
-final public class Passeio extends Veiculo {
+final public class Passeio extends Veiculo implements Calcular {
 
     private int qtdPassageiros;
 
@@ -51,4 +51,8 @@ final public class Passeio extends Veiculo {
                 " }";
     }
 
+    @Override
+    public int calcular() {
+        return 0;
+    }
 }

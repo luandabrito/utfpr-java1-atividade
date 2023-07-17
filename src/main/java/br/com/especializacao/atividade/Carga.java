@@ -1,6 +1,6 @@
 package br.com.especializacao.atividade;
 
-final public class Carga extends Veiculo {
+final public class Carga extends Veiculo implements Calcular {
 
     private int cargaMax;
     private int tara;
@@ -63,4 +63,8 @@ final public class Carga extends Veiculo {
                 " }";
     }
 
+    @Override
+    public int calcular() {
+        return 0;
+    }
 }

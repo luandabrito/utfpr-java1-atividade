@@ -1,42 +1,63 @@
 package br.com.especializacao.atividade;
 
+import br.com.especializacao.atividade.service.PasseioService;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Teste {
 
+    PasseioService passeioService = new PasseioService();
+    Scanner sc = new Scanner (System.in);
+    ArrayList<Passeio> veicPasseioList = new ArrayList<>();
+
     public static void main(String[] args) throws IOException {
+        Teste obj = new Teste();
+        obj.menu();
 
-        List<Veiculo> veiculosList = new ArrayList<>();
-        Passeio passeio = new Passeio();
-        Carga carga = new Carga();
+    }
 
-        veiculosList.add(passeio.criarVeiculoPasseio("Fiat", "UNO", "ABC0000", "Branca",
-                200, 5, 20, 4, 5));
-        veiculosList.add(passeio.criarVeiculoPasseio("Ford", "Ka", "ABC1111", "Preta",
-                200, 5, 20, 4, 5));
-        veiculosList.add(passeio.criarVeiculoPasseio("Hyundai", "Hb20", "ABC2222", "Vermelha",
-                200, 5, 20, 4, 5));
-        veiculosList.add(passeio.criarVeiculoPasseio("Hyundai", "Creta", "ABC3333", "Cinza",
-                200, 5, 20, 4, 5));
-        veiculosList.add(passeio.criarVeiculoPasseio("Hyundai", "Ix35", "ABC4444", "Azul",
-                200, 5, 20, 4, 5));
+    public void menu(){
 
-        veiculosList.add(carga.criarVeiculoCarga("Ford", "Caminhão 1", "ABC5555", "Preta",
-                1, 15, 20, 4, 5, 2));
-        veiculosList.add(carga.criarVeiculoCarga("Fiat", "Caminhão 2", "ABC6666", "Azul",
-                164, 15, 20, 4, 5, 2));
-        veiculosList.add(carga.criarVeiculoCarga("Ford", "Caminhão 3", "ABC7777", "Branco",
-                164, 15, 20, 4, 5, 2));
-        veiculosList.add(carga.criarVeiculoCarga("Fiat", "Caminhão 4", "ABC8888", "Cinza",
-                164, 15, 20, 4, 5, 2));
-        veiculosList.add(carga.criarVeiculoCarga("Ford", "Caminhão 5", "ABC9999", "Amarelo",
-                164, 15, 20, 4, 5, 2));
+        while(true) {
+            System.out.println("Sistema de Gestão de Veículos - Menu Inicial");
+            System.out.println("1 - Cadastrar Veículo de Passeio");
+            System.out.println("2 - Cadastrar Veículos de Carga");
+            System.out.println("3 - Imprimir Todos os Veículos de Passeio");
+            System.out.println("4 - Imprimir Todos os Veículos de Carga");
+            System.out.println("5 - Imprimir Veículo de Passeio pela Placa");
+            System.out.println("6 - Imprimir Veículo de Carga pela Placa");
+            System.out.println("7 - Sair do Sistema");
+            int opcao = sc.nextInt();
+            sc.nextLine(); //Limpa o buffer
+            if (opcao == 7) {
+                break;
+            } else if (opcao == 1) {
+                cadastrarVeiculoPasseio(sc);
+            } else if (opcao == 3) {
+                listarVeiculosPasseio();
+            } else {
+                    System.out.println("Opção inválida.\n");
+            }
+        }
+        sc.close();
+    }
 
-        for (Veiculo veiculo : veiculosList) {
+    private void cadastrarVeiculoPasseio(Scanner sc) {
+        if (veicPasseioList.size() == 5) {
+            System.out.println("Você já tem cinco veículos cadastrados!");
+        } else {
+            veicPasseioList.add(passeioService.cadastrarVeiculoPasseio(sc));
+        }
+    }
+
+    private void listarVeiculosPasseio() {
+        for (Veiculo veiculo : veicPasseioList) {
             System.out.println(veiculo.toString());
         }
+
     }
 
 
