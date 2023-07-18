@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class Teste {
 
     VeiculoService passeioService = new VeiculoService();
-    Scanner sc = new Scanner (System.in);
+    Leitura l = new Leitura();
     ArrayList<Passeio> veicPasseioList = new ArrayList<>();
     ArrayList<Carga> veicCargaList = new ArrayList<>();
 
@@ -31,15 +31,14 @@ public class Teste {
             System.out.println("5 - Imprimir Veículo de Passeio pela Placa");
             System.out.println("6 - Imprimir Veículo de Carga pela Placa");
             System.out.println("7 - Sair do Sistema");
-            int opcao = sc.nextInt();
-            sc.nextLine(); //Limpa o buffer
+            int opcao = Integer.parseInt(l.entDados("Digite a opção desejada: "));
             if (opcao == 7) {
                 System.out.println("Encerrando o Sistema");
                 break;
             } else if (opcao == 1) {
-                cadastrarVeiculoPasseio(sc);
+                cadastrarVeiculoPasseio();
             } else if (opcao == 2) {
-                cadastrarVeiculoCarga(sc);
+                cadastrarVeiculoCarga();
             } else if (opcao == 3) {
                 listarVeiculosPasseio();
             } else if (opcao == 4) {
@@ -48,18 +47,19 @@ public class Teste {
                 System.out.println("Opção inválida.\n");
             }
         }
-        sc.close();
     }
 
-    private void cadastrarVeiculoPasseio(Scanner sc) {
+    private void cadastrarVeiculoPasseio() {
         do {
-            Passeio veiculoNovo = passeioService.cadastrarVeiculoPasseio(sc);
-            if (veicPasseioList.size() == 0  || !placaExiste(veiculoNovo, "passeio")) {
-                veicPasseioList.add(veiculoNovo);
+            Passeio veicPasseio = new Passeio();
+            System.out.println("Cadastro de Veículos de Passeio!");
+            veicPasseio.setQtdPassageiros(Integer.parseInt(l.entDados("Informe a quantidade de passageiros: ")));
+            cadastrarVeiculo(veicPasseio);
+            if (veicPasseioList.size() == 0  || !placaExiste(veicPasseio, "passeio")) {
+                veicPasseioList.add(veicPasseio);
                 System.out.println("Veículo cadastrado com sucesso. ");
             }
-            System.out.println("Deseja cadastrar outro veículo de passeio? Sim ou Não ");
-            String opcao = sc.nextLine();
+            String opcao = l.entDados("Deseja cadastrar outro veículo de passeio? Sim ou Não ");
             if (opcao.equalsIgnoreCase("não")){
                 break;
             }
@@ -75,15 +75,18 @@ public class Teste {
         }
     }
 
-    private void cadastrarVeiculoCarga(Scanner sc) {
+    private void cadastrarVeiculoCarga() {
         do {
-            Carga veiculoNovo = passeioService.cadastrarVeiculoCarga(sc);
-            if (veicCargaList.size() == 0  || !placaExiste(veiculoNovo, "carga")) {
-                veicCargaList.add(veiculoNovo);
+            Carga veicCarga = new Carga();
+            System.out.println("Cadastro de Veículos de Carga!");
+            veicCarga.setCargaMax(Integer.parseInt(l.entDados("Informe a carga máxima: ")));
+            veicCarga.setTara(Integer.parseInt(l.entDados("Informe a tara: ")));
+            cadastrarVeiculo(veicCarga);
+            if (veicCargaList.size() == 0  || !placaExiste(veicCarga, "carga")) {
+                veicCargaList.add(veicCarga);
                 System.out.println("Veículo cadastrado com sucesso. ");
             }
-            System.out.println("Deseja cadastrar outro veículo de passeio? Sim ou Não ");
-            String opcao = sc.nextLine();
+            String opcao = l.entDados("Deseja cadastrar outro veículo de passeio? Sim ou Não ");
             if (opcao.equalsIgnoreCase("não")){
                 break;
             }
@@ -120,5 +123,14 @@ public class Teste {
         return false;
     }
 
-
+    public void cadastrarVeiculo(Veiculo veiculo){
+        veiculo.setMarca(l.entDados("Informe a marca do veículos: "));
+        veiculo.setModelo(l.entDados("Informe o modelo do veículos: "));
+        veiculo.setCor(l.entDados("Informe a cor do veículos: "));
+        veiculo.setPlaca(l.entDados("Informe a placa do veículos: "));
+        veiculo.setQtdRodas(Integer.parseInt(l.entDados("Informe a quantidade de rodas do veículos: ")));
+        veiculo.setVelocMax(Float.parseFloat(l.entDados("Informe a velocidade máxima do veículos: ")));
+        veiculo.getMotor().setPotencia(Integer.parseInt(l.entDados("Informe a potência do motor do veículos: ")));
+        veiculo.getMotor().setQtdPist(Integer.parseInt(l.entDados("Informe a quantidade de Pist do veículos: ")));
+    }
 }
