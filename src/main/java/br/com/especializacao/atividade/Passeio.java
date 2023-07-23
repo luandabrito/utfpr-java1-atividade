@@ -21,38 +21,25 @@ final public class Passeio extends Veiculo implements Calcular {
         return velocMax * 1000;
     }
 
-    public Passeio criarVeiculoPasseio(String marca, String modelo, String placa, String cor,
-                                       float velocMax, int qtdRodas, int potencia, int qtdPist, int qtdPassageiros) {
-        Passeio veicPasseio = new Passeio();
-        veicPasseio.setMarca(marca);
-        veicPasseio.setModelo(modelo);
-        veicPasseio.setPlaca(placa);
-        veicPasseio.setCor(cor);
-        veicPasseio.setVelocMax(velocMax);
-        veicPasseio.setQtdRodas(qtdRodas);
-        veicPasseio.getMotor().setPotencia(potencia);
-        veicPasseio.getMotor().setQtdPist(qtdPist);
-        veicPasseio.setQtdPassageiros(qtdPassageiros);
-        return veicPasseio;
+    @Override
+    public int calcular() {
+        return this.getPlaca().length() + this.getMarca().length() + this.getModelo().length() + this.getCor().length();
     }
-
     @Override
     public String toString() {
         return "Veiculo de Carga { " +
-                "Marca: " + super.getMarca() +
+                "Placa: " + super.getPlaca() +
+                ", Marca: " + super.getMarca() +
                 ", Modelo: " + super.getModelo() +
                 ", Cor: " + super.getCor() +
-                ", Placa: " + super.getPlaca() +
+                ", Velocidade Maxima em km/h: " + super.getVelocMax() +
+                ", Velocidade Maxima em m/h: " + calcVel(super.getVelocMax()) +
                 ", Quantidade de rodas: " + super.getQtdRodas() +
-                ", Velocidade Maxima: " + calcVel(super.getVelocMax()) +
                 ", Potencia do Motor: " + super.getMotor().getPotencia() +
                 ", Quantidade de Pist do Motor: " + super.getMotor().getQtdPist() +
                 ", Quantidade de passageiros: " + qtdPassageiros +
+                ", Valor calculado Interface: " + calcular() +
                 " }";
     }
 
-    @Override
-    public int calcular() {
-        return 0;
-    }
 }

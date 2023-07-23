@@ -41,6 +41,10 @@ public class Teste {
                 listarVeiculosPasseio();
             } else if (opcao == 4) {
                 listarVeiculosCarga();
+            } else if (opcao == 5) {
+                buscarVeiculoPasseioPelaPlaca();
+            } else if (opcao == 6) {
+                buscarVeiculoCargaPelaPlaca();
             } else {
                 System.out.println("Opção inválida.\n");
             }
@@ -66,12 +70,6 @@ public class Teste {
         } while (veicPasseioList.size() < 5);
     }
 
-    public void listarVeiculosPasseio() {
-        for (Veiculo veiculo : veicPasseioList) {
-            System.out.println(veiculo.toString());
-        }
-    }
-
     public void cadastrarVeiculoCarga() {
         do {
             Carga veicCarga = new Carga();
@@ -93,15 +91,10 @@ public class Teste {
 
     }
 
-    public void listarVeiculosCarga() {
-        for (Veiculo veiculo : veicCargaList) {
-            System.out.println(veiculo.toString());
-        }
-    }
-
     public boolean cadastrarVeiculo(Veiculo veiculo){
         veiculo.setPlaca(l.entDados("Informe a placa do veículos: "));
-        if (!veiculoService.placaExiste(veiculo, veicPasseioList, veicCargaList)) {
+        if (veiculoService.veiculoPasseioExiste(veicPasseioList, veiculo.getPlaca()) == null &&
+                veiculoService.veiculoCargaExiste(veicCargaList, veiculo.getPlaca()) == null) {
             veiculo.setMarca(l.entDados("Informe a marca do veículos: "));
             veiculo.setModelo(l.entDados("Informe o modelo do veículos: "));
             veiculo.setCor(l.entDados("Informe a cor do veículos: "));
@@ -110,7 +103,42 @@ public class Teste {
             veiculo.getMotor().setPotencia(Integer.parseInt(l.entDados("Informe a potência do motor do veículos: ")));
             veiculo.getMotor().setQtdPist(Integer.parseInt(l.entDados("Informe a quantidade de Pist do veículos: ")));
             return true;
+        } else {
+            System.out.println("Você já possui um veículo cadastrado com a placa: " + veiculo.getPlaca());
         }
         return false;
     }
+
+    public void listarVeiculosPasseio() {
+        for (Veiculo veiculo : veicPasseioList) {
+            System.out.println(veiculo.toString());
+        }
+    }
+
+    public void listarVeiculosCarga() {
+        for (Veiculo veiculo : veicCargaList) {
+            System.out.println(veiculo.toString());
+        }
+    }
+
+    public void buscarVeiculoPasseioPelaPlaca() {
+        String placa = l.entDados("Informe a placa do veículos que deseja buscar: ");
+        Passeio veiculoLocalizado = veiculoService.veiculoPasseioExiste(veicPasseioList, placa);
+        imprimirVeiculoLocalizadoOuErro(veiculoLocalizado, placa);
+    }
+
+    public void buscarVeiculoCargaPelaPlaca() {
+        String placa = l.entDados("Informe a placa do veículos que deseja buscar: ");
+        Carga veiculoLocalizado = veiculoService.veiculoCargaExiste(veicCargaList, placa);
+        imprimirVeiculoLocalizadoOuErro(veiculoLocalizado, placa);
+    }
+
+    public void imprimirVeiculoLocalizadoOuErro(Veiculo veiculoLocalizado, String placa){
+        if(veiculoLocalizado != null){
+            System.out.println(veiculoLocalizado.toString());
+        } else {
+            System.out.println("Veiculo não localizado pela Placa: " + placa);
+        }
+    }
+
 }

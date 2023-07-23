@@ -24,5 +24,22 @@ public class VeiculoService {
         return false;
     }
 
+    public Passeio veiculoPasseioExiste(ArrayList<Passeio> passeiosList, String placa){
+        for (Passeio veiculo : passeiosList){
+            if (veiculo.getPlaca().equalsIgnoreCase(placa)){
+                return veiculo;
+            }
+        }
+        return null;
+    }
+
+    public Carga veiculoCargaExiste(ArrayList<Carga> cargasList, String placa){
+        for (Carga veiculo : cargasList){
+            if (veiculo.getPlaca().equalsIgnoreCase(placa)){
+                return veiculo;
+            }
+        }
+        return null;
+    }
 
 }
