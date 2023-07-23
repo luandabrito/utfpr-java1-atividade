@@ -44,13 +44,13 @@ final public class Carga extends Veiculo implements Calcular {
                 ", Modelo: " + super.getModelo() +
                 ", Cor: " + super.getCor() +
                 ", Velocidade Maxima em km/h: " + super.getVelocMax() +
-                ", Velocidade Maxima em cm/h: " + calcVel(super.getVelocMax()) +
+                ", Velocidade Maxima em cm/h: " + this.calcVel(super.getVelocMax()) +
                 ", Quantidade de rodas: " + super.getQtdRodas() +
                 ", Potencia do Motor: " + super.getMotor().getPotencia() +
                 ", Quantidade de Pist do Motor: " + super.getMotor().getQtdPist() +
-                ", CargaMax: " + cargaMax +
-                ", Tara: " + tara +
-                ", Valor calculado Interface: " + calcular() +
+                ", CargaMax: " + this.getCargaMax() +
+                ", Tara: " + this.getTara() +
+                ", Valor calculado Interface: " + this.calcular() +
                 " }";
     }
 }

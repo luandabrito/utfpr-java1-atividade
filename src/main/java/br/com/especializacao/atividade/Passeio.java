@@ -33,12 +33,12 @@ final public class Passeio extends Veiculo implements Calcular {
                 ", Modelo: " + super.getModelo() +
                 ", Cor: " + super.getCor() +
                 ", Velocidade Maxima em km/h: " + super.getVelocMax() +
-                ", Velocidade Maxima em m/h: " + calcVel(super.getVelocMax()) +
+                ", Velocidade Maxima em m/h: " + this.calcVel(super.getVelocMax()) +
                 ", Quantidade de rodas: " + super.getQtdRodas() +
                 ", Potencia do Motor: " + super.getMotor().getPotencia() +
                 ", Quantidade de Pist do Motor: " + super.getMotor().getQtdPist() +
-                ", Quantidade de passageiros: " + qtdPassageiros +
-                ", Valor calculado Interface: " + calcular() +
+                ", Quantidade de passageiros: " + this.getQtdPassageiros() +
+                ", Valor calculado Interface: " + this.calcular() +
                 " }";
     }
 
