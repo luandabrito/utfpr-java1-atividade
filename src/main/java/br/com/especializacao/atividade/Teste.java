@@ -1,43 +1,144 @@
 package br.com.especializacao.atividade;
 
+import br.com.especializacao.atividade.service.VeiculoService;
+
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Teste {
 
+    VeiculoService veiculoService = new VeiculoService();
+    Leitura l = new Leitura();
+    ArrayList<Passeio> veicPasseioList = new ArrayList<>();
+    ArrayList<Carga> veicCargaList = new ArrayList<>();
+
     public static void main(String[] args) throws IOException {
+        Teste obj = new Teste();
+        obj.menu();
 
-        List<Veiculo> veiculosList = new ArrayList<>();
-        Passeio passeio = new Passeio();
-        Carga carga = new Carga();
+    }
 
-        veiculosList.add(passeio.criarVeiculoPasseio("Fiat", "UNO", "ABC0000", "Branca",
-                200, 5, 20, 4, 5));
-        veiculosList.add(passeio.criarVeiculoPasseio("Ford", "Ka", "ABC1111", "Preta",
-                200, 5, 20, 4, 5));
-        veiculosList.add(passeio.criarVeiculoPasseio("Hyundai", "Hb20", "ABC2222", "Vermelha",
-                200, 5, 20, 4, 5));
-        veiculosList.add(passeio.criarVeiculoPasseio("Hyundai", "Creta", "ABC3333", "Cinza",
-                200, 5, 20, 4, 5));
-        veiculosList.add(passeio.criarVeiculoPasseio("Hyundai", "Ix35", "ABC4444", "Azul",
-                200, 5, 20, 4, 5));
+    public void menu(){
 
-        veiculosList.add(carga.criarVeiculoCarga("Ford", "Caminhão 1", "ABC5555", "Preta",
-                1, 15, 20, 4, 5, 2));
-        veiculosList.add(carga.criarVeiculoCarga("Fiat", "Caminhão 2", "ABC6666", "Azul",
-                164, 15, 20, 4, 5, 2));
-        veiculosList.add(carga.criarVeiculoCarga("Ford", "Caminhão 3", "ABC7777", "Branco",
-                164, 15, 20, 4, 5, 2));
-        veiculosList.add(carga.criarVeiculoCarga("Fiat", "Caminhão 4", "ABC8888", "Cinza",
-                164, 15, 20, 4, 5, 2));
-        veiculosList.add(carga.criarVeiculoCarga("Ford", "Caminhão 5", "ABC9999", "Amarelo",
-                164, 15, 20, 4, 5, 2));
+        while(true) {
+            System.out.println("\nSistema de Gestão de Veículos - Menu Inicial");
+            System.out.println("1 - Cadastrar Veículo de Passeio");
+            System.out.println("2 - Cadastrar Veículos de Carga");
+            System.out.println("3 - Imprimir Todos os Veículos de Passeio");
+            System.out.println("4 - Imprimir Todos os Veículos de Carga");
+            System.out.println("5 - Imprimir Veículo de Passeio pela Placa");
+            System.out.println("6 - Imprimir Veículo de Carga pela Placa");
+            System.out.println("7 - Sair do Sistema");
+            int opcao = Integer.parseInt(l.entDados("Digite a opção desejada: "));
+            if (opcao == 7) {
+                System.out.println("Encerrando o Sistema");
+                break;
+            } else if (opcao == 1) {
+                cadastrarVeiculoPasseio();
+            } else if (opcao == 2) {
+                cadastrarVeiculoCarga();
+            } else if (opcao == 3) {
+                listarVeiculosPasseio();
+            } else if (opcao == 4) {
+                listarVeiculosCarga();
+            } else if (opcao == 5) {
+                buscarVeiculoPasseioPelaPlaca();
+            } else if (opcao == 6) {
+                buscarVeiculoCargaPelaPlaca();
+            } else {
+                System.out.println("Opção inválida.\n");
+            }
+        }
+    }
 
-        for (Veiculo veiculo : veiculosList) {
+    public void cadastrarVeiculoPasseio() {
+        do {
+            Passeio veicPasseio = new Passeio();
+            System.out.println("Cadastro de Veículos de Passeio!");
+            if (cadastrarVeiculo(veicPasseio)){
+                veicPasseio.setQtdPassageiros(Integer.parseInt(l.entDados("Informe a quantidade de passageiros: ")));
+                veicPasseioList.add(veicPasseio);
+                System.out.println("Veículo cadastrado com sucesso. ");
+            }
+            String opcao = l.entDados("Deseja cadastrar outro veículo de passeio? Sim ou Não ");
+            if (opcao.equalsIgnoreCase("não")){
+                break;
+            }
+            if (veicPasseioList.size() == 5) {
+                System.out.println("Você atingiu o limite máximo de cinco veículos cadastrados!");
+            }
+        } while (veicPasseioList.size() < 5);
+    }
+
+    public void cadastrarVeiculoCarga() {
+        do {
+            Carga veicCarga = new Carga();
+            System.out.println("Cadastro de Veículos de Carga!");
+            if(cadastrarVeiculo(veicCarga)) {
+                veicCarga.setCargaMax(Integer.parseInt(l.entDados("Informe a carga máxima: ")));
+                veicCarga.setTara(Integer.parseInt(l.entDados("Informe a tara: ")));
+                veicCargaList.add(veicCarga);
+                System.out.println("Veículo cadastrado com sucesso. ");
+            }
+            String opcao = l.entDados("Deseja cadastrar outro veículo de passeio? Sim ou Não ");
+            if (opcao.equalsIgnoreCase("não")){
+                break;
+            }
+            if (veicCargaList.size() == 5) {
+                System.out.println("Você atingiu o limite máximo de cinco veículos cadastrados!");
+            }
+        } while (veicCargaList.size() < 5);
+
+    }
+
+    public boolean cadastrarVeiculo(Veiculo veiculo){
+        veiculo.setPlaca(l.entDados("Informe a placa do veículos: "));
+        if (veiculoService.veiculoPasseioExiste(veicPasseioList, veiculo.getPlaca()) == null &&
+                veiculoService.veiculoCargaExiste(veicCargaList, veiculo.getPlaca()) == null) {
+            veiculo.setMarca(l.entDados("Informe a marca do veículos: "));
+            veiculo.setModelo(l.entDados("Informe o modelo do veículos: "));
+            veiculo.setCor(l.entDados("Informe a cor do veículos: "));
+            veiculo.setQtdRodas(Integer.parseInt(l.entDados("Informe a quantidade de rodas do veículos: ")));
+            veiculo.setVelocMax(Float.parseFloat(l.entDados("Informe a velocidade máxima do veículos: ")));
+            veiculo.getMotor().setPotencia(Integer.parseInt(l.entDados("Informe a potência do motor do veículos: ")));
+            veiculo.getMotor().setQtdPist(Integer.parseInt(l.entDados("Informe a quantidade de Pist do veículos: ")));
+            return true;
+        } else {
+            System.out.println("Você já possui um veículo cadastrado com a placa: " + veiculo.getPlaca());
+        }
+        return false;
+    }
+
+    public void listarVeiculosPasseio() {
+        for (Veiculo veiculo : veicPasseioList) {
             System.out.println(veiculo.toString());
         }
     }
 
+    public void listarVeiculosCarga() {
+        for (Veiculo veiculo : veicCargaList) {
+            System.out.println(veiculo.toString());
+        }
+    }
+
+    public void buscarVeiculoPasseioPelaPlaca() {
+        String placa = l.entDados("Informe a placa do veículos que deseja buscar: ");
+        Passeio veiculoLocalizado = veiculoService.veiculoPasseioExiste(veicPasseioList, placa);
+        imprimirVeiculoLocalizadoOuErro(veiculoLocalizado, placa);
+    }
+
+    public void buscarVeiculoCargaPelaPlaca() {
+        String placa = l.entDados("Informe a placa do veículos que deseja buscar: ");
+        Carga veiculoLocalizado = veiculoService.veiculoCargaExiste(veicCargaList, placa);
+        imprimirVeiculoLocalizadoOuErro(veiculoLocalizado, placa);
+    }
+
+    public void imprimirVeiculoLocalizadoOuErro(Veiculo veiculoLocalizado, String placa){
+        if(veiculoLocalizado != null){
+            System.out.println(veiculoLocalizado.toString());
+        } else {
+            System.out.println("Veiculo não localizado pela Placa: " + placa);
+        }
+    }
 
 }

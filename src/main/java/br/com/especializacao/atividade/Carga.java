@@ -1,6 +1,6 @@
 package br.com.especializacao.atividade;
 
-final public class Carga extends Veiculo {
+final public class Carga extends Veiculo implements Calcular {
 
     private int cargaMax;
     private int tara;
@@ -31,36 +31,26 @@ final public class Carga extends Veiculo {
         return velocMax * 100000;
     }
 
-    public Carga criarVeiculoCarga(String marca, String modelo, String placa, String cor,
-                                   float velocMax, int qtdRodas, int potencia, int qtdPist, int cargaMax, int tara){
-        Carga veicCarga = new Carga();
-        veicCarga.setMarca(marca);
-        veicCarga.setModelo(modelo);
-        veicCarga.setPlaca(placa);
-        veicCarga.setCor(cor);
-        veicCarga.setVelocMax(velocMax);
-        veicCarga.setQtdRodas(qtdRodas);
-        veicCarga.getMotor().setPotencia(potencia);
-        veicCarga.getMotor().setQtdPist(qtdPist);
-        veicCarga.setCargaMax(cargaMax);
-        veicCarga.setTara(tara);
-        return veicCarga;
+    @Override
+    public int calcular() {
+        return this.getQtdRodas() + this.getMotor().getPotencia() + this.getMotor().getQtdPist() + this.getCargaMax() + this.getTara();
     }
 
     @Override
     public String toString() {
         return "Veiculo de Carga { " +
-                "Marca: " + super.getMarca() +
+                "Placa: " + super.getPlaca() +
+                ", Marca: " + super.getMarca() +
                 ", Modelo: " + super.getModelo() +
                 ", Cor: " + super.getCor() +
-                ", Placa: " + super.getPlaca() +
+                ", Velocidade Maxima em km/h: " + super.getVelocMax() +
+                ", Velocidade Maxima em cm/h: " + this.calcVel(super.getVelocMax()) +
                 ", Quantidade de rodas: " + super.getQtdRodas() +
-                ", Velocidade Maxima: " + calcVel(super.getVelocMax()) +
                 ", Potencia do Motor: " + super.getMotor().getPotencia() +
                 ", Quantidade de Pist do Motor: " + super.getMotor().getQtdPist() +
-                ", CargaMax: " + cargaMax +
-                ", Tara: " + tara +
+                ", CargaMax: " + this.getCargaMax() +
+                ", Tara: " + this.getTara() +
+                ", Valor calculado Interface: " + this.calcular() +
                 " }";
     }
-
 }
