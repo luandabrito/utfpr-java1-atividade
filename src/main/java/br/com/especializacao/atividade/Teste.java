@@ -1,21 +1,20 @@
 package br.com.especializacao.atividade;
 
 import br.com.especializacao.atividade.exceptions.VeicExistException;
-
-import java.io.IOException;
+import br.com.especializacao.atividade.exceptions.VelocException;
 
 public class Teste {
 
     BDVeiculos bdVeiculos = new BDVeiculos();
     Leitura l = new Leitura();
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Teste obj = new Teste();
         obj.menu();
 
     }
 
-    public void menu(){
+    public void menu() {
 
         while(true) {
             System.out.println("\nSistema de Gestão de Veículos - Menu Inicial");
@@ -52,13 +51,13 @@ public class Teste {
         do {
             Passeio veicPasseio = new Passeio();
             System.out.println("Cadastro de Veículos de Passeio!");
-            if (cadastrarVeiculo(veicPasseio)){
+            if (cadastrarVeiculo(veicPasseio, "passeio")){
                 veicPasseio.setQtdPassageiros(Integer.parseInt(l.entDados("Informe a quantidade de passageiros: ")));
                 bdVeiculos.setVeicPasseioList(veicPasseio);
                 System.out.println("Veículo cadastrado com sucesso. ");
             }
-            String opcao = l.entDados("Deseja cadastrar outro veículo de passeio? Sim ou Não ");
-            if (opcao.equalsIgnoreCase("não")){
+            String opcao = l.entDados("Deseja cadastrar outro veículo de passeio? Sim ou Nao ");
+            if (opcao.equalsIgnoreCase("nao")){
                 break;
             }
             if (bdVeiculos.getVeicPasseioList().size() == 5) {
@@ -71,14 +70,14 @@ public class Teste {
         do {
             Carga veicCarga = new Carga();
             System.out.println("Cadastro de Veículos de Carga!");
-            if(cadastrarVeiculo(veicCarga)) {
+            if(cadastrarVeiculo(veicCarga, "carga")) {
                 veicCarga.setCargaMax(Integer.parseInt(l.entDados("Informe a carga máxima: ")));
                 veicCarga.setTara(Integer.parseInt(l.entDados("Informe a tara: ")));
                 bdVeiculos.setVeicCargaList(veicCarga);
                 System.out.println("Veículo cadastrado com sucesso. ");
             }
-            String opcao = l.entDados("Deseja cadastrar outro veículo de passeio? Sim ou Não ");
-            if (opcao.equalsIgnoreCase("não")){
+            String opcao = l.entDados("Deseja cadastrar outro veículo de passeio? Sim ou Nao ");
+            if (opcao.equalsIgnoreCase("nao")){
                 break;
             }
             if (bdVeiculos.getVeicCargaList().size() == 5) {
@@ -88,7 +87,7 @@ public class Teste {
 
     }
 
-    public boolean cadastrarVeiculo(Veiculo veiculo){
+    public boolean cadastrarVeiculo(Veiculo veiculo, String tipo) {
         veiculo.setPlaca(l.entDados("Informe a placa do veículos: "));
         try {
             bdVeiculos.veiculoPasseioExiste(veiculo.getPlaca());
@@ -97,14 +96,17 @@ public class Teste {
             veiculo.setModelo(l.entDados("Informe o modelo do veículos: "));
             veiculo.setCor(l.entDados("Informe a cor do veículos: "));
             veiculo.setQtdRodas(Integer.parseInt(l.entDados("Informe a quantidade de rodas do veículos: ")));
-            veiculo.setVelocMax(Float.parseFloat(l.entDados("Informe a velocidade máxima do veículos: ")));
+            veiculo.setVelocMax(Float.parseFloat(l.entDados("Informe a velocidade máxima do veículos: ")), tipo);
             veiculo.getMotor().setPotencia(Integer.parseInt(l.entDados("Informe a potência do motor do veículos: ")));
             veiculo.getMotor().setQtdPist(Integer.parseInt(l.entDados("Informe a quantidade de Pist do veículos: ")));
             return true;
         } catch (VeicExistException e) {
            return false;
+        } catch (VelocException e) {
+            veiculo.getMotor().setPotencia(Integer.parseInt(l.entDados("Informe a potência do motor do veículos: ")));
+            veiculo.getMotor().setQtdPist(Integer.parseInt(l.entDados("Informe a quantidade de Pist do veículos: ")));
+            return true;
         }
-
     }
 
     public void listarVeiculosPasseio() {
