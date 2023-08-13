@@ -11,15 +11,33 @@ public class BDVeiculos {
         return veicPasseioList;
     }
 
-    public void setVeicPasseioList(ArrayList<Passeio> veicPasseioList) {
-        this.veicPasseioList = veicPasseioList;
+    public void setVeicPasseioList(Passeio veicPasseio) {
+        this.veicPasseioList.add(veicPasseio);
     }
 
     public ArrayList<Carga> getVeicCargaList() {
         return veicCargaList;
     }
 
-    public void setVeicCargaList(ArrayList<Carga> veicCargaList) {
-        this.veicCargaList = veicCargaList;
+    public void setVeicCargaList(Carga veicCarga) {
+        this.veicCargaList.add(veicCarga);
+    }
+
+    public Passeio veiculoPasseioExiste(String placa){
+        for (Passeio veiculo : veicPasseioList){
+            if (veiculo.getPlaca().equalsIgnoreCase(placa)){
+                return veiculo;
+            }
+        }
+        return null;
+    }
+
+    public Carga veiculoCargaExiste(String placa){
+        for (Carga veiculo : veicCargaList){
+            if (veiculo.getPlaca().equalsIgnoreCase(placa)){
+                return veiculo;
+            }
+        }
+        return null;
     }
 }

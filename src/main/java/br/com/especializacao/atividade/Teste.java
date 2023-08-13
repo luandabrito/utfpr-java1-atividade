@@ -1,16 +1,11 @@
 package br.com.especializacao.atividade;
 
-import br.com.especializacao.atividade.service.VeiculoService;
-
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class Teste {
 
-    VeiculoService veiculoService = new VeiculoService();
+    BDVeiculos bdVeiculos = new BDVeiculos();
     Leitura l = new Leitura();
-    ArrayList<Passeio> veicPasseioList = new ArrayList<>();
-    ArrayList<Carga> veicCargaList = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
         Teste obj = new Teste();
@@ -57,17 +52,17 @@ public class Teste {
             System.out.println("Cadastro de Veículos de Passeio!");
             if (cadastrarVeiculo(veicPasseio)){
                 veicPasseio.setQtdPassageiros(Integer.parseInt(l.entDados("Informe a quantidade de passageiros: ")));
-                veicPasseioList.add(veicPasseio);
+                bdVeiculos.setVeicPasseioList(veicPasseio);
                 System.out.println("Veículo cadastrado com sucesso. ");
             }
             String opcao = l.entDados("Deseja cadastrar outro veículo de passeio? Sim ou Não ");
             if (opcao.equalsIgnoreCase("não")){
                 break;
             }
-            if (veicPasseioList.size() == 5) {
+            if (bdVeiculos.getVeicPasseioList().size() == 5) {
                 System.out.println("Você atingiu o limite máximo de cinco veículos cadastrados!");
             }
-        } while (veicPasseioList.size() < 5);
+        } while (bdVeiculos.getVeicPasseioList().size() < 5);
     }
 
     public void cadastrarVeiculoCarga() {
@@ -77,24 +72,24 @@ public class Teste {
             if(cadastrarVeiculo(veicCarga)) {
                 veicCarga.setCargaMax(Integer.parseInt(l.entDados("Informe a carga máxima: ")));
                 veicCarga.setTara(Integer.parseInt(l.entDados("Informe a tara: ")));
-                veicCargaList.add(veicCarga);
+                bdVeiculos.setVeicCargaList(veicCarga);
                 System.out.println("Veículo cadastrado com sucesso. ");
             }
             String opcao = l.entDados("Deseja cadastrar outro veículo de passeio? Sim ou Não ");
             if (opcao.equalsIgnoreCase("não")){
                 break;
             }
-            if (veicCargaList.size() == 5) {
+            if (bdVeiculos.getVeicCargaList().size() == 5) {
                 System.out.println("Você atingiu o limite máximo de cinco veículos cadastrados!");
             }
-        } while (veicCargaList.size() < 5);
+        } while (bdVeiculos.getVeicCargaList().size() < 5);
 
     }
 
     public boolean cadastrarVeiculo(Veiculo veiculo){
         veiculo.setPlaca(l.entDados("Informe a placa do veículos: "));
-        if (veiculoService.veiculoPasseioExiste(veicPasseioList, veiculo.getPlaca()) == null &&
-                veiculoService.veiculoCargaExiste(veicCargaList, veiculo.getPlaca()) == null) {
+        if (bdVeiculos.veiculoPasseioExiste(veiculo.getPlaca()) == null &&
+                bdVeiculos.veiculoCargaExiste(veiculo.getPlaca()) == null) {
             veiculo.setMarca(l.entDados("Informe a marca do veículos: "));
             veiculo.setModelo(l.entDados("Informe o modelo do veículos: "));
             veiculo.setCor(l.entDados("Informe a cor do veículos: "));
@@ -110,26 +105,26 @@ public class Teste {
     }
 
     public void listarVeiculosPasseio() {
-        for (Veiculo veiculo : veicPasseioList) {
+        for (Veiculo veiculo : bdVeiculos.getVeicPasseioList()) {
             System.out.println(veiculo.toString());
         }
     }
 
     public void listarVeiculosCarga() {
-        for (Veiculo veiculo : veicCargaList) {
+        for (Veiculo veiculo : bdVeiculos.getVeicCargaList()) {
             System.out.println(veiculo.toString());
         }
     }
 
     public void buscarVeiculoPasseioPelaPlaca() {
         String placa = l.entDados("Informe a placa do veículos que deseja buscar: ");
-        Passeio veiculoLocalizado = veiculoService.veiculoPasseioExiste(veicPasseioList, placa);
+        Passeio veiculoLocalizado = bdVeiculos.veiculoPasseioExiste(placa);
         imprimirVeiculoLocalizadoOuErro(veiculoLocalizado, placa);
     }
 
     public void buscarVeiculoCargaPelaPlaca() {
         String placa = l.entDados("Informe a placa do veículos que deseja buscar: ");
-        Carga veiculoLocalizado = veiculoService.veiculoCargaExiste(veicCargaList, placa);
+        Carga veiculoLocalizado = bdVeiculos.veiculoCargaExiste(placa);
         imprimirVeiculoLocalizadoOuErro(veiculoLocalizado, placa);
     }
 
