@@ -1,5 +1,8 @@
 package br.com.especializacao.atividade;
 
+import br.com.especializacao.atividade.exceptions.VelocException;
+import static br.com.especializacao.atividade.util.Constantes.MENSAGEM_VELOCIDADE_MAXIMA;
+
 public abstract class Veiculo {
 
     private String placa;
@@ -66,8 +69,17 @@ public abstract class Veiculo {
         this.cor = cor;
     }
 
-    final public void setVelocMax(float velocMax) {
-        this.velocMax = velocMax;
+    final public void setVelocMax(float velocMax, String tipo) throws VelocException {
+        if (velocMax < 80 || velocMax > 110){
+            if (tipo.equals("passeio")){
+                this.velocMax = 100;
+            } else {
+                this.velocMax = 90;
+            }
+            throw new VelocException(MENSAGEM_VELOCIDADE_MAXIMA);
+        } else {
+            this.velocMax = velocMax;
+        }
     }
 
     final public void setQtdRodas(int qtdRodas) {
