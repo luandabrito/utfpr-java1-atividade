@@ -23,17 +23,14 @@ public class Teste {
         while(true) {
             System.out.println("\nSistema de Gestão de Veículos - Menu Inicial");
             System.out.println("1 - Cadastrar Veículo de Passeio");
-            System.out.println("2 - Cadastrar Veículos de Carga");
+            System.out.println("2 - Cadastrar Veículo de Carga");
             System.out.println("3 - Imprimir Todos os Veículos de Passeio");
             System.out.println("4 - Imprimir Todos os Veículos de Carga");
             System.out.println("5 - Imprimir Veículo de Passeio pela Placa");
             System.out.println("6 - Imprimir Veículo de Carga pela Placa");
             System.out.println("7 - Sair do Sistema");
             int opcao = Integer.parseInt(l.entDados("Digite a opção desejada: "));
-            if (opcao == 7) {
-                System.out.println("Encerrando o Sistema");
-                break;
-            } else if (opcao == 1) {
+            if (opcao == 1) {
                 cadastrarVeiculoPasseio();
             } else if (opcao == 2) {
                 cadastrarVeiculoCarga();
@@ -45,6 +42,9 @@ public class Teste {
                 buscarVeiculoPasseioPelaPlaca();
             } else if (opcao == 6) {
                 buscarVeiculoCargaPelaPlaca();
+            } else if (opcao == 7) {
+                System.out.println("Encerrando o Sistema");
+                break;
             } else {
                 System.out.println("Opção inválida.\n");
             }
