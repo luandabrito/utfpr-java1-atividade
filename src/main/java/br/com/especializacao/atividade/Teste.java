@@ -1,5 +1,7 @@
 package br.com.especializacao.atividade;
 
+import br.com.especializacao.atividade.exceptions.VeicExistException;
+
 import java.io.IOException;
 
 public class Teste {
@@ -88,8 +90,9 @@ public class Teste {
 
     public boolean cadastrarVeiculo(Veiculo veiculo){
         veiculo.setPlaca(l.entDados("Informe a placa do veículos: "));
-        if (bdVeiculos.veiculoPasseioExiste(veiculo.getPlaca()) == null &&
-                bdVeiculos.veiculoCargaExiste(veiculo.getPlaca()) == null) {
+        try {
+            bdVeiculos.veiculoPasseioExiste(veiculo.getPlaca());
+            bdVeiculos.veiculoCargaExiste(veiculo.getPlaca());
             veiculo.setMarca(l.entDados("Informe a marca do veículos: "));
             veiculo.setModelo(l.entDados("Informe o modelo do veículos: "));
             veiculo.setCor(l.entDados("Informe a cor do veículos: "));
@@ -98,10 +101,10 @@ public class Teste {
             veiculo.getMotor().setPotencia(Integer.parseInt(l.entDados("Informe a potência do motor do veículos: ")));
             veiculo.getMotor().setQtdPist(Integer.parseInt(l.entDados("Informe a quantidade de Pist do veículos: ")));
             return true;
-        } else {
-            System.out.println("Você já possui um veículo cadastrado com a placa: " + veiculo.getPlaca());
+        } catch (VeicExistException e) {
+           return false;
         }
-        return false;
+
     }
 
     public void listarVeiculosPasseio() {
@@ -118,13 +121,13 @@ public class Teste {
 
     public void buscarVeiculoPasseioPelaPlaca() {
         String placa = l.entDados("Informe a placa do veículos que deseja buscar: ");
-        Passeio veiculoLocalizado = bdVeiculos.veiculoPasseioExiste(placa);
+        Passeio veiculoLocalizado = bdVeiculos.getVeiculoPasseioPelaPlaca(placa);
         imprimirVeiculoLocalizadoOuErro(veiculoLocalizado, placa);
     }
 
     public void buscarVeiculoCargaPelaPlaca() {
         String placa = l.entDados("Informe a placa do veículos que deseja buscar: ");
-        Carga veiculoLocalizado = bdVeiculos.veiculoCargaExiste(placa);
+        Carga veiculoLocalizado = bdVeiculos.getVeiculoCargaPelaPlaca(placa);
         imprimirVeiculoLocalizadoOuErro(veiculoLocalizado, placa);
     }
 
