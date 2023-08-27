@@ -54,6 +54,7 @@ public class Teste {
     }
 
     public void cadastrarVeiculoPasseio() {
+        String opcao = "sim";
         do {
             Passeio veicPasseio = new Passeio();
             System.out.println("Cadastro de Veículos de Passeio!");
@@ -62,17 +63,12 @@ public class Teste {
                 bdVeiculos.setVeicPasseioList(veicPasseio);
                 System.out.println("Veículo cadastrado com sucesso. ");
             }
-            String opcao = l.entDados("Deseja cadastrar outro veículo de passeio? Sim ou Nao ");
-            if (opcao.equalsIgnoreCase("nao")){
-                break;
-            }
-            if (bdVeiculos.getVeicPasseioList().size() == 5) {
-                System.out.println("Você atingiu o limite máximo de cinco veículos cadastrados!");
-            }
-        } while (bdVeiculos.getVeicPasseioList().size() < 5);
+            opcao = l.entDados("Deseja cadastrar outro veículo de passeio? Sim ou Nao ");
+        } while (opcao.equalsIgnoreCase("sim"));
     }
 
     public void cadastrarVeiculoCarga() {
+        String opcao = "sim";
         do {
             Carga veicCarga = new Carga();
             System.out.println("Cadastro de Veículos de Carga!");
@@ -82,14 +78,8 @@ public class Teste {
                 bdVeiculos.setVeicCargaList(veicCarga);
                 System.out.println("Veículo cadastrado com sucesso. ");
             }
-            String opcao = l.entDados("Deseja cadastrar outro veículo de passeio? Sim ou Nao ");
-            if (opcao.equalsIgnoreCase("nao")){
-                break;
-            }
-            if (bdVeiculos.getVeicCargaList().size() == 5) {
-                System.out.println("Você atingiu o limite máximo de cinco veículos cadastrados!");
-            }
-        } while (bdVeiculos.getVeicCargaList().size() < 5);
+            opcao = l.entDados("Deseja cadastrar outro veículo de passeio? Sim ou Nao ");
+        } while (opcao.equalsIgnoreCase("sim"));
 
     }
 
