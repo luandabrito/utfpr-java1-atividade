@@ -3,13 +3,14 @@ package br.com.especializacao.atividade;
 import br.com.especializacao.atividade.exceptions.VeicExistException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BDVeiculos {
 
-    ArrayList<Passeio> veicPasseioList = new ArrayList<>();
-    ArrayList<Carga> veicCargaList = new ArrayList<>();
+    List<Passeio> veicPasseioList = new ArrayList<>();
+    List<Carga> veicCargaList = new ArrayList<>();
 
-    public ArrayList<Passeio> getVeicPasseioList() {
+    public List<Passeio> getVeicPasseioList() {
         return veicPasseioList;
     }
 
@@ -17,7 +18,7 @@ public class BDVeiculos {
         this.veicPasseioList.add(veicPasseio);
     }
 
-    public ArrayList<Carga> getVeicCargaList() {
+    public List<Carga> getVeicCargaList() {
         return veicCargaList;
     }
 
@@ -32,8 +33,8 @@ public class BDVeiculos {
     }
 
     public Passeio getVeiculoPasseioPelaPlaca(String placa) {
-        for (Passeio veiculo : veicPasseioList){
-            if (veiculo.getPlaca().equalsIgnoreCase(placa)){
+        for (Passeio veiculo : veicPasseioList) {
+            if (veiculo.getPlaca().equalsIgnoreCase(placa)) {
                 return veiculo;
             }
         }
@@ -53,5 +54,21 @@ public class BDVeiculos {
             }
         }
         return null;
+    }
+
+    public void excluirVeiculo(String placa, String tipo) throws VeicExistException {
+        if (tipo.equalsIgnoreCase("passeio")){
+            Passeio veicLocalizado = getVeiculoPasseioPelaPlaca(placa);
+            if (veicLocalizado == null){
+                throw new VeicExistException("Veiculo de Passeio não localizado!");
+            }
+            veicPasseioList.remove(veicLocalizado);
+        } else {
+            Carga veicLocalizado = getVeiculoCargaPelaPlaca(placa);
+            if (veicLocalizado == null){
+                throw new VeicExistException("Veiculo de Carga não localizado!");
+            }
+            veicCargaList.remove(veicLocalizado);
+        }
     }
 }

@@ -8,13 +8,13 @@ public class Teste {
     BDVeiculos bdVeiculos = new BDVeiculos();
     Leitura l = new Leitura();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws VeicExistException {
         Teste obj = new Teste();
         obj.menu();
 
     }
 
-    public void menu() {
+    public void menu() throws VeicExistException {
 
         while(true) {
             System.out.println("\nSistema de Gestão de Veículos - Menu Inicial");
@@ -24,7 +24,9 @@ public class Teste {
             System.out.println("4 - Imprimir Todos os Veículos de Carga");
             System.out.println("5 - Imprimir Veículo de Passeio pela Placa");
             System.out.println("6 - Imprimir Veículo de Carga pela Placa");
-            System.out.println("7 - Sair do Sistema");
+            System.out.println("7 - Excluir Veículo de Passeio pela Placa");
+            System.out.println("8 - Excluir Veículo de Carga pela Placa");
+            System.out.println("9 - Sair do Sistema");
             int opcao = Integer.parseInt(l.entDados("Digite a opção desejada: "));
             if (opcao == 1) {
                 cadastrarVeiculoPasseio();
@@ -39,6 +41,10 @@ public class Teste {
             } else if (opcao == 6) {
                 buscarVeiculoCargaPelaPlaca();
             } else if (opcao == 7) {
+                excluirVeiculoPasseioPelaPlaca();
+            } else if (opcao == 8) {
+                excluirVeiculoCargaPelaPlaca();
+            } else if (opcao == 9) {
                 System.out.println("Encerrando o Sistema");
                 break;
             } else {
@@ -141,4 +147,21 @@ public class Teste {
         }
     }
 
+    public void excluirVeiculoPasseioPelaPlaca() throws VeicExistException {
+        try{
+            String placa = l.entDados("Informe a placa do veículos que deseja buscar: ");
+            bdVeiculos.excluirVeiculo(placa, "passeio");
+            System.out.println("Veículo excluido com sucesso!");
+        } catch (VeicExistException e){
+        }
+    }
+
+    public void excluirVeiculoCargaPelaPlaca() throws VeicExistException {
+        try{
+            String placa = l.entDados("Informe a placa do veículos que deseja buscar: ");
+            bdVeiculos.excluirVeiculo(placa, "carga");
+            System.out.println("Veículo excluido com sucesso!");
+        } catch (VeicExistException e){
+        }
+    }
 }
