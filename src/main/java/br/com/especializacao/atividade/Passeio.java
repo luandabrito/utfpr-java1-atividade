@@ -27,7 +27,7 @@ final public class Passeio extends Veiculo implements Calcular {
     }
     @Override
     public String toString() {
-        return "Veiculo de Carga { " +
+        return "Veiculo de Passeio { " +
                 "Placa: " + super.getPlaca() +
                 ", Marca: " + super.getMarca() +
                 ", Modelo: " + super.getModelo() +
